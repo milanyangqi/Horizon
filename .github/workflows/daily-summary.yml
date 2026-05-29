@@ -1,9 +1,9 @@
 name: Daily Horizon Summary
 
 on:
-  # schedule:
-  #   - cron: '0 0 */2 * *'  # Runs every 2 days at 00:00 UTC
-  #     timezone: 'Asia/Shanghai'
+  schedule:
+    # GitHub Actions cron uses UTC. 00:30 UTC = 08:30 Asia/Shanghai.
+    - cron: '30 0 * * *'
   workflow_dispatch:      # Allow manual trigger
 
 jobs:
@@ -38,6 +38,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           LWN_KEY: ${{ secrets.LWN_KEY }}
+          HORIZON_WEBHOOK_URL: ${{ secrets.HORIZON_WEBHOOK_URL }}
         run: uv run horizon --hours 48
 
       - name: Set current date as environment variable
