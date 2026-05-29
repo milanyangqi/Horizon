@@ -9,6 +9,7 @@ on:
 jobs:
   daily-summary:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: write  # Needed to commit changes
 
@@ -40,7 +41,7 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           LWN_KEY: ${{ secrets.LWN_KEY }}
           HORIZON_WEBHOOK_URL: ${{ secrets.HORIZON_WEBHOOK_URL }}
-        run: uv run horizon --hours 48
+        run: uv run horizon --hours 24
 
       - name: Set current date as environment variable
         run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
